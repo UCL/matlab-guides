@@ -1,0 +1,26 @@
+Notes on Deployment of examples
+
+Live Scripts (*.mlx) can be exported as ipynb notebooks for Jupyter, but the 
+user has to pip install some code, ensure matlab is on the path and still needs
+a licence. This is too complicated for these simple examples.
+
+Development of code, LiveScripts etc is done in the personal Project education.
+The buildtool is used to deploy completed LiveScripts
+In the deployed code, associated Data is in a folder data below the top level
+
+MATLAB Drive:
+Link to Guides MDrive folder:
+https://drive.matlab.com/sharing/cd63980b-b7e2-4cfb-9a99-c3e060322513
+
+Give out a link to the relevant folder e.g Guides, the link lets them see files.
+To use and edit, use the  "+ Add to my Files" and select the "Copy Folder"
+
+Folder structure
+ Guides
+   data   [contains data needed]
+   source [contains LiveScipts]
+   pdf    [pdf of exported LiveScripts]
+   getting_started.mlx
+   
+   
+
