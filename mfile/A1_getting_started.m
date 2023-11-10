@@ -1,7 +1,7 @@
-%% 01 Getting Started
-% Folder |source| contains LiveScripts that you can run by double clicking to 
-% open. Then step through using the "Run and Advance" button. The folder |data| 
-% contains some of the data required.
+%% A1 Getting Started
+% Folder |source| contains LiveScripts. From that folder, you can run a LiveScript 
+% by double clicking to open. Then step through using the "Run and Advance" button. 
+% The folder |data| contains some of the data required. There are also PDFs available.
 % 
 % The code is fairly self-explanatory, but here are a few points:
 %% 
@@ -42,10 +42,4 @@ whos a rowvec colvec
 % 
 % 
 % 
-% _David Atkinson, November 2023_
-% 
-% 
-% 
-% 
-% 
-% ,
+% _David Atkinson, November 2023._
