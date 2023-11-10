@@ -8,6 +8,8 @@ Development of code, LiveScripts etc is done in the personal Project education.
 The buildtool is used to deploy completed LiveScripts
 In the deployed code, associated Data is in a folder data below the top level
 
+Remove mlx output before transfer, create PDF and .m use .m in git?
+
 MATLAB Drive:
 Link to Guides MDrive folder:
 https://drive.matlab.com/sharing/cd63980b-b7e2-4cfb-9a99-c3e060322513
