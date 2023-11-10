@@ -1,8 +1,7 @@
 %% Sampling and Standard Error
-% Inspired by MIT OpenCourseWare "Sampling and Standard Error"
-% 
-% by Prof John Guttag, Lecture 8 in the 2016 series _Introduction to Computational 
-% Thinking and Data Science._
+% Inspired by MIT OpenCourseWare "Sampling and Standard Error" by Prof John 
+% Guttag, Lecture 8 in the 2016 series _Introduction to Computational Thinking 
+% and Data Science._
 % 
 % License: Creative Commons  BY-NC-SA
 % 
@@ -16,7 +15,7 @@
 % folder above this one.
 % 
 % This script uses a file called |temperature.csv| , downloaded from the link 
-% above. The file needs to be on your MATLAB path.
+% above. The file needs to be on your MATLAB path or in the expected location.
 
 % Set the filename for the downloaded file: temperatures.csv
 dataFilename = 'temperatures.csv' ;
