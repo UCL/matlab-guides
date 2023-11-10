@@ -25,4 +25,8 @@ Folder structure
    getting_started.mlx
    
    
-
+Plan
+Edit and move from Practical MATLAB:
+figure_overview_walkthrough
+odds_plot_soln01
+kmplot_soln02
