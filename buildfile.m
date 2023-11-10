@@ -33,13 +33,16 @@ plan = buildplan(localfunctions);
 plan.DefaultTasks = "MDriveNonData";
 
 % Make the "MDriveNonData" task dependent on the "exportmPDF" task
-plan("MDriveNonData").Dependencies = ["exportmPDF"] ;
+plan("MDriveNonData").Dependencies = "exportmPDF" ;
 
 % FileCollection of LiveScripts to be deployed (along with their .m and
 % .pdf exports)
 fc = files(plan, {'source/samplingandse.mlx', ...
                   'source/rocClassifier.mlx', ...
-                  'source/01_getting_started.mlx'} ) ;
+                  'source/01_getting_started.mlx', ...
+                  'source/figures_overview.mlx', ...
+                  'source/odds_plot.mlx', ...
+                  'source/KaplanMeierPlot.mlx'} ) ;
 
 MDriveGuidesFolder = fullfile(getenv('HOME'), '/MATLAB-Drive/Teaching/Guides') ;
 
@@ -48,10 +51,19 @@ plan("exportmPDF").Inputs = fc ;
 plan("MDriveNonData").Inputs = fc ;
 plan("MDriveNonData").Outputs = MDriveGuidesFolder  ;
 
-% Data
-dataMIT = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8/temperatures.csv' ;
-plan("MDriveData").Inputs =  dataMIT ;
-plan("MDriveData").Outputs = fullfile(MDriveGuidesFolder, dataMIT ) ;
+% Data (relative paths) See LiveScripts for data sources
+rdataMIT = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8/temperatures.csv' ;
+rdataOdds = 'data/MenniNatMed/41591_2020_916_MOESM3_ESM.xlsx' ;
+rdataKaplan = 'data/Cox/gehan.txt' ;
+
+fcdatain = files(plan, { rdataMIT, rdataOdds, rdataKaplan }) ;
+
+fcdataout = files(plan, {fullfile( MDriveGuidesFolder, rdataMIT), ...
+                         fullfile( MDriveGuidesFolder, rdataOdds), ...
+                         fullfile( MDriveGuidesFolder, rdataKaplan) }) ;
+
+plan("MDriveData").Inputs =  fcdatain ;
+plan("MDriveData").Outputs = fcdataout ;
 
 end
 
@@ -108,11 +120,17 @@ end
 % - - - 
 function MDriveDataTask(context)
 % Put copy of data in MATLAB Drive
-filePaths = context.Task.Inputs.paths ;
-for ifile = 1: length(filePaths)
-    [status, messg] = copyfile( filePaths{ifile}, context.Task.Outputs.paths ) ;
+fileInPaths  = context.Task.Inputs.paths ;
+fileOutPaths = context.Task.Outputs.paths ;
+
+if length(fileInPaths) ~= length(fileOutPaths)
+    error("Require same number of input and output data files")
+end 
+
+for ifile = 1: length(fileInPaths)
+    [status, messg] = copyfile( fileInPaths{ifile}, fileOutPaths{ifile} ) ;
     if status == 1
-        disp("Copied "+ filePaths{ifile} + " to " + context.Task.Outputs.paths )
+        disp("Copied "+ fileInPaths{ifile} + " to " + fileOutPaths{ifile} )
     else
         disp("Copy failed: " + messg)
     end

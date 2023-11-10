@@ -22,12 +22,6 @@ Folder structure
  Guides
    data   [contains data needed]
    source [contains LiveScipts]
-   pdf    [pdf of exported LiveScripts]
+   PDF    [pdf of exported LiveScripts]
    mfile  [.m versions of LiveScripts, useful for version control]
    
-
-Plan
-Edit and move from Practical MATLAB:
-figure_overview_walkthrough
-odds_plot_soln01
-kmplot_soln02
