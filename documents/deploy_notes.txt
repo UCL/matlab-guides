@@ -6,9 +6,10 @@ a licence. This is too complicated for these simple examples.
 
 Development of code, LiveScripts etc is done in the personal Project education.
 The buildtool is used to deploy completed LiveScripts
-In the deployed code, associated Data is in a folder data below the top level
+In the deployed code, associated Ddata is in a folder data below the top level
 
-Remove mlx output before transfer, create PDF and .m use .m in git?
+For more on Projects, see:
+https://blogs.mathworks.com/developer/2020/06/11/project-yourself/
 
 MATLAB Drive:
 Link to Guides MDrive folder:
@@ -22,9 +23,9 @@ Folder structure
    data   [contains data needed]
    source [contains LiveScipts]
    pdf    [pdf of exported LiveScripts]
-   getting_started.mlx
+   mfile  [.m versions of LiveScripts, useful for version control]
    
-   
+
 Plan
 Edit and move from Practical MATLAB:
 figure_overview_walkthrough
