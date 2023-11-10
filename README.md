@@ -22,4 +22,5 @@ Guides
     odds_plot           Odds ration plot using early Covid data
 
 
+The deployment from this repo locally uses buildtool and a buildfile - this might be a useful example in itself although I have limited experience so there may be better implementations.
 
