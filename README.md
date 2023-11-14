@@ -21,6 +21,7 @@ The current examples are:
     figures_overview    - Hints for plotting figures and data visualisation.
     samplingandse       - Sampling and Standard Error. Demonstrates picking random samples, histograms, plotting.  
     rocClassifier       - Receiver Operator Characteristic (ROC) curve plotting. Also scatter and swarmchart plots, confidence intervals from bootstrapping.  
+    dicomHandling       - Introduction to handling DICOM files.
     KaplanMeierPlot     - A Kaplan Meier survival plot using Cox's data.
     odds_plot           - Odds ratio plot using early Covid data
 
