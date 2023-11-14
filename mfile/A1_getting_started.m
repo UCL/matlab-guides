@@ -1,10 +1,15 @@
 %% A1 Getting Started
-% Folder |source| contains LiveScripts. From that folder, you can run a LiveScript 
-% by double clicking to open. Then step through using the "Run and Advance" button. 
-% The folder |data| contains some of the data required. There are also PDFs available.
+% These guides use LiveScripts which can be edited, interacted with and run 
+% "live". There are also exports of standard MATLAB .m files and PDF versions 
+% that include the figure outputs. The LiveScripts are in the folder |source,|with 
+% data in the folders below |data|. The scripts assume you run them from the level 
+% above |source| and |data|. You can tell where you are by typing |pwd| at the 
+% MATLAB command line.   When a LiveScript is open, you can step through using 
+% the "*Run and Advance*" button. 
 % 
 % The code is fairly self-explanatory, but here are a few points:
 %% 
+% * You can get help on MATLAB functions by typing |doc|.
 % * Variables that hold numbers have a size that is described as: number_of_rows 
 % x number_of_columns. So, a single scalar is size 1x1.
 % * A list, or vector, of |N| numbers, can be a row vector (1 row, N columns 
@@ -42,4 +47,6 @@ whos a rowvec colvec
 % 
 % 
 % 
-% _David Atkinson, November 2023._
+% _David Atkinson_
+
+disp(datetime)

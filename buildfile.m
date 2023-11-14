@@ -6,12 +6,13 @@ function plan = buildfile
 % Somewhat experimental as this is first time I have used this 
 % functionality. Not really needed for so few files!
 %
+% Clear output in LiveScripts.
 % Run from education Project top level folder
 %
 % Tasks:
 %   exportmPDF
 %   MDriveNonData  (Default). Has exportmPDF as dependency
-%   MDriveData
+%   MDriveData  This will copy ALL fi;es and folders below data.
 %
 % Example
 % buildtool  
@@ -21,6 +22,8 @@ function plan = buildfile
 %
 % David Atkinson, University College London
 %
+
+import matlab.buildtool.io.FileCollection
 
 % Could probably be tidied up. 
 % Check for extra files in MDrive that should be deleted?
@@ -52,17 +55,21 @@ plan("MDriveNonData").Inputs = fc ;
 plan("MDriveNonData").Outputs = MDriveGuidesFolder  ;
 
 % Data (relative paths) See LiveScripts for data sources
-rdataMIT = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8/temperatures.csv' ;
-rdataOdds = 'data/MenniNatMed/41591_2020_916_MOESM3_ESM.xlsx' ;
-rdataKaplan = 'data/Cox/gehan.txt' ;
+% % rdataMIT = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8/temperatures.csv' ;
+% % rdataOdds = 'data/MenniNatMed/41591_2020_916_MOESM3_ESM.xlsx' ;
+% % rdataKaplan = 'data/Cox/gehan.txt' ;
+% % 
+% % fcdatain = files(plan, { rdataMIT, rdataOdds, rdataKaplan }) ;
+% % 
+% % fcdataout = files(plan, {fullfile( MDriveGuidesFolder, rdataMIT), ...
+% %                          fullfile( MDriveGuidesFolder, rdataOdds), ...
+% %                          fullfile( MDriveGuidesFolder, rdataKaplan) }) ;
 
-fcdatain = files(plan, { rdataMIT, rdataOdds, rdataKaplan }) ;
+% This will copy ALL data below the data folder
+fc_data_rin = FileCollection.fromPaths("data/**/*" ) ;
+fcdataout  =  FileCollection.fromPaths(fullfile( MDriveGuidesFolder)) ;
 
-fcdataout = files(plan, {fullfile( MDriveGuidesFolder, rdataMIT), ...
-                         fullfile( MDriveGuidesFolder, rdataOdds), ...
-                         fullfile( MDriveGuidesFolder, rdataKaplan) }) ;
-
-plan("MDriveData").Inputs =  fcdatain ;
+plan("MDriveData").Inputs =  fc_data_rin ;
 plan("MDriveData").Outputs = fcdataout ;
 
 end
@@ -120,20 +127,41 @@ end
 % - - - 
 function MDriveDataTask(context)
 % Put copy of data in MATLAB Drive
-fileInPaths  = context.Task.Inputs.paths ;
-fileOutPaths = context.Task.Outputs.paths ;
+fileInPaths  = context.Task.Inputs.paths' ; % expect list of folders and files
+fileOutPaths = context.Task.Outputs.paths ; % single root folder for data
 
-if length(fileInPaths) ~= length(fileOutPaths)
-    error("Require same number of input and output data files")
-end 
+if length( fileOutPaths) ~= 1
+    error("Expecting one root folder for data output")
+end
 
-for ifile = 1: length(fileInPaths)
-    [status, messg] = copyfile( fileInPaths{ifile}, fileOutPaths{ifile} ) ;
-    if status == 1
-        disp("Copied "+ fileInPaths{ifile} + " to " + fileOutPaths{ifile} )
+% Check inputs start with 'data' 
+in1char = char(fileInPaths(1)) ;
+if ~strcmp(in1char(1:4),'data')
+    error("Expecting input names to start with data")
+end
+
+for ipath = 1: length( fileInPaths )
+    outpath_this = fullfile(fileOutPaths, fileInPaths(ipath)) ;
+
+    if isfolder( fileInPaths(ipath) )
+        % folder so make folder
+        [status, msg] = mkdir(outpath_this) ;
+        if status == 0
+            warning("Problem with mkdir for: "+outpath_this+"  "+msg)
+        end
+    elseif isfile(fileInPaths(ipath) )
+        % file so copy
+        [status, messg] = copyfile( fileInPaths(ipath), outpath_this ) ;
+        if status == 1
+            disp("Copied "+ fileInPaths(ipath) + " to " + outpath_this )
+        else
+            disp("Copy failed: " + messg)
+        end
+
     else
-        disp("Copy failed: " + messg)
+        error("Neither folder nor file for: "+fileInPaths(ipath))
     end
 end
+
 
 end
