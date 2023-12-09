@@ -18,14 +18,18 @@
 % above. The file needs to be on your MATLAB path or in the expected location.
 
 % Set the filename for the downloaded file: temperatures.csv
-dataFilename = 'temperatures.csv' ;
+rpathData = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8' ;
 
-% Check file is on path, if not try folder ../data/MITOCW/IntroCompThinkingandDataScienceLecture8
+fileData = 'temperatures.csv' ;
+
+dataFilename = fullfile(rpathData, fileData) ;
+
+% Check file is on path, if not try setting automatically
 if ~exist(dataFilename,"file")
     pathThisScript  = fileparts(matlab.desktop.editor.getActiveFilename) ;
     pathAboveScript = fileparts(pathThisScript) ;
-    pathData = fullfile( pathAboveScript, 'data/MITOCW/IntroCompThinkingandDataScienceLecture8') ;
-    dataFilename = fulfile(pathData, dataFilename)  ;
+    pathData = fullfile( pathAboveScript, rpathData) ;
+    dataFilename = fullfile(pathData, fileData)  ;
 end
 %% 
 % Check we can see the file. (No errors in file or path names.) 
@@ -172,6 +176,10 @@ disp("Standard Error of the Mean = " + stdPop/sqrt(num_in_sample))
 % 
 % For more details and further examples, watch the lecture video linked at the 
 % top.
+% 
+% 
+% 
+% _David Atkinson, December 2023._
 % 
 % 
 % 

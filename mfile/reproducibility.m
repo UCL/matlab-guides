@@ -152,4 +152,7 @@ optsTable = struct2table(opts,'AsArray',true)
 end
 %% 
 % 
+% 
+% Copyright 2023 University College London, David Atkinson, <mailto:D.Atkinson@ucl.ac.uk 
+% D.Atkinson@ucl.ac.uk>
 %%

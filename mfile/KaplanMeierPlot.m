@@ -1,6 +1,4 @@
 %% Kaplan-Meier plot
-% Kaplan-Meier plot 
-% 
 % Copyright 2020-2023, University College London, David Atkinson, <mailto:D.Atkinon@ucl.ac.uk 
 % D.Atkinson@ucl.ac.uk>
 % 
@@ -46,4 +44,8 @@ set(gca,'FontSize', 14)
 % (You cannot just do hstairs.LineWidth = 2 because there is more than one
 % stair plot and hstairs is an array. However, set will work.
 hstairs = findobj('Type','Stair') ;
-set(hstairs, 'LineWidth',2)
+set(hstairs, 'LineWidth',2) 
+%% 
+% 
+% 
+% _David Atkinson, December 2023_

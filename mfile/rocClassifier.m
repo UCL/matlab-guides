@@ -237,6 +237,9 @@ yl = yline(TTPR90) ;
 % 
 % 
 % 
+% Copyright 2023 University College London, David Atkinson, <mailto:D.Atkinson@ucl.ac.uk 
+% D.Atkinson@ucl.ac.uk>
+% 
 % _David Atkinson, 2023._
 % 
 %

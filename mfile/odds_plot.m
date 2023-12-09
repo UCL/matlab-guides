@@ -5,30 +5,26 @@
 % of self-reported symptoms to predict potential COVID-19_" Menni et al, Nature 
 % Medicine (2020). <https://doi.org/10.1038/s41591-020-0916-2 https://doi.org/10.1038/s41591-020-0916-2> 
 % 
-% Requires the spreadsheet file '41591_2020_916_MOESM3_ESM.xlsx' to be in the 
-% 'data' folder
+% Requires the spreadsheet file '|41591_2020_916_MOESM3_ESM|.|xlsx|' to be in 
+% the '|data|' folder
 % 
-% Copyright 2020-2023 University College London, David Atkinson, <mailto:D.Atkinson@ucl.ac.uk 
+% Copyright 2023 University College London, David Atkinson, <mailto:D.Atkinson@ucl.ac.uk 
 % D.Atkinson@ucl.ac.uk>
 
-dataFolder = "../data/MenniNatMed" ;  % Correct if this script is run from 'source' folder. 
-dataFile   = "41591_2020_916_MOESM3_ESM.xlsx" ;
+rpathFolder = "data/MenniNatMed" ;  % Correct if this script is run from folder above 'source'. 
+rdataFullFilename = fullfile(rpathFolder, "41591_2020_916_MOESM3_ESM.xlsx") ;
 
-dataFullFilename = fullfile(dataFolder, dataFile) ;
-
-if ~exist(dataFullFilename,'file')
-    warning("Could not find file: " + dataFullFilename)
-    disp("Current folder is: " + pwd)
-    disp("It may help to be in the Guides/source folder")
-else
-    disp("Ready to read file: " + dataFullFilename)
+if ~exist(rdataFullFilename,"file")
+    pathThisScript  = fileparts(matlab.desktop.editor.getActiveFilename) ;
+    pathAboveScript = fileparts(pathThisScript) ;
+    rdataFullFilename = fullfile(pathAboveScript, rdataFullFilename)  ;
 end
 %% 
 % Read in the spreadsheet data.You can use |uiimport| to start the Import Tool 
 % and gain an understanding of the data and how it might be read. With a basic 
 % table such as this, the data can be read into a table easily:
 
-TB = readtable(dataFullFilename) 
+TB = readtable(rdataFullFilename) 
 %% 
 % TB is a table, here with 13 variables (one row for each symptom) and 7 columns.
 % 
