@@ -1,14 +1,13 @@
 # matlab-guides
 MATLAB code for educational / research guides.
 
-This is the Git repo used to develop the guides for education and research. The guides are MATLAB LiveScripts with copies of the completed scripts exported as `.m` files and PDF documents. 
+This is the Git repo used to develop guides for education and research. The guides are in MATLAB LiveScript (notebooks) format. Some are under development and those completed are exported as PDF and `.m` files. 
 All are available from the folders in this GitHub repo, and the completed examples are also copied to [MATLAB Drive](https://drive.matlab.com) and can be run by users locally, or, in [MATLAB Online](https://matlab.mathworks.com) without needing to install MATLAB. They are available in MATLAB Drive using the sharing link: 
 https://drive.matlab.com/sharing/cd63980b-b7e2-4cfb-9a99-c3e060322513 
 
 The folder structure is:
 
 Guides  
-
 
     source/  - the LiveScript .mlx files. Run these locally, or in MATLAB Online  
     data/    - data required  
@@ -34,7 +33,6 @@ The current completed examples are:
 
     MATLAB              - Some notes on MATLAB
     
-
 
 
 The deployment process uses `buildtool` and a buildfile is included in this repository - this file might also be a useful example for those interested. I have limited experience with this so there may be better implementations. Nevertheless, it is proving to be a powerful way to update the mfile and PDF folders and copy data and code to MATLAB Drive.
