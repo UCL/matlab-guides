@@ -1,3 +1,5 @@
 resources/project/
 .buildtool/
 samplingandse-checkpoint.ipynb
+threshold_animation_default.gif
+threshold_animation_ideal.gif

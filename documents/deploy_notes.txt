@@ -17,6 +17,7 @@ https://drive.matlab.com/sharing/cd63980b-b7e2-4cfb-9a99-c3e060322513
 
 Give out a link to the relevant folder e.g Guides, the link lets them see files.
 To use and edit, use the  "+ Add to my Files" and select the "Copy Folder"
+Note there is a limit of the number of people who can use a shared link.
 
 Folder structure
  Guides
@@ -24,4 +25,5 @@ Folder structure
    source [contains LiveScipts]
    PDF    [pdf of exported LiveScripts]
    mfile  [.m versions of LiveScripts, useful for version control]
+   figures [.m files for producing figures for presentations] 
    
