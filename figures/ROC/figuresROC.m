@@ -2,6 +2,11 @@ function figuresROC(testType)
 % figuresROC Figures for ROC presentation
 %   Based on rocClassifier Live Script
 %
+% figuresROC
+% figuresROC('ideal') - uses ideal distribution 
+%
+% Creates animated gif file
+%
 % Fix random seed so that we always get the same figure
 %
 
