@@ -18,10 +18,9 @@
 % above. The file needs to be on your MATLAB path or in the expected location.
 
 % Set the filename for the downloaded file: temperatures.csv
-rpathData = 'data/MITOCW/IntroCompThinkingandDataScienceLecture8' ;
+dataFilename = fullfile('data','MITOCW','IntroCompThinkingandDataScienceLecture8', 'temperatures.csv')
 
 fileData = 'temperatures.csv' ;
-
 dataFilename = fullfile(rpathData, fileData) ;
 
 % Check file is on path, if not try setting automatically
