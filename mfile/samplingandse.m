@@ -18,25 +18,28 @@
 % above. The file needs to be on your MATLAB path or in the expected location.
 
 % Set the filename for the downloaded file: temperatures.csv
-dataFilename = fullfile('data','MITOCW','IntroCompThinkingandDataScienceLecture8', 'temperatures.csv')
+dataFilename = 'temperature.csv' ;
+if ~exist("dataFilename","file")
+    dataPartialFilename = fullfile('data','MITOCW','IntroCompThinkingandDataScienceLecture8', 'temperatures.csv') ;
 
-fileData = 'temperatures.csv' ;
-dataFilename = fullfile(rpathData, fileData) ;
-
-% Check file is on path, if not try setting automatically
-if ~exist(dataFilename,"file")
-    pathThisScript  = fileparts(matlab.desktop.editor.getActiveFilename) ;
-    pathAboveScript = fileparts(pathThisScript) ;
-    pathData = fullfile( pathAboveScript, rpathData) ;
-    dataFilename = fullfile(pathData, fileData)  ;
+    pathThisScript  = fileparts(matlab.desktop.editor.getActiveFilename) ;  % ../education/source
+    pathAboveThisScript  = fileparts(pathThisScript) ; % ../education
+    % If running from buildtool we will be one level higher and so need to add
+    % education back - yuk
+    if ~contains(pathAboveThisScript,'education')
+        pathAboveThisScript = fullfile(pathAboveThisScript,'education') ;
+    end
+    dataFilename = fullfile(pathAboveThisScript, dataPartialFilename)  ;
 end
 %% 
 % Check we can see the file. (No errors in file or path names.) 
 
 % Check data file is accessible
 if ~exist(dataFilename, "file") 
-    warning(['Check path or name for file: ', dataFilename])
+    error(['Check path or name for file: ', dataFilename])
     disp("Current folder is: "+pwd)
+else
+    disp(['File name is ',dataFilename])
 end
 % 
 % The Population

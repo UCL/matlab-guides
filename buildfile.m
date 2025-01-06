@@ -95,7 +95,7 @@ for ifile = 1: length(filePaths)
     disp("Starting exports for: "+name_this)
     export(mlxFile, fullfile(path_up, 'mfile', name_this) , Format="m" )
     export(mlxFile, fullfile(path_up, 'PDF', name_this), Format="pdf", ...
-        Run=true, CatchError=false)
+        Run=true, CatchError=true)
 
 end
 
