@@ -1,18 +1,18 @@
 # matlab-guides
 MATLAB code for educational / research guides.
 
-This is the Git repo used to develop guides for education and research. The guides are in MATLAB LiveScript (notebooks) format. Some are under development and those completed are exported as PDF and `.m` files. There is also a `.m` file for creating the PowerPoint figures used in a Receiver Operating Characterisitc talk.
-All are available from the folders in this GitHub repo, and the completed examples are also copied to [MATLAB Drive](https://drive.matlab.com) and can be run by users locally, or, in [MATLAB Online](https://matlab.mathworks.com) without needing to install MATLAB. They are available in MATLAB Drive using the sharing link (though there is a limit to the number of times the link can be used): 
+This is the Git repo used to develop guides for education and research. The guides are mostly in MATLAB LiveScript (notebooks) format. Some are under development and those completed are exported as PDF and `.m` files. These are in the [PDF](PDF) and [mfile](mfile) folders. There is also a `.m` file for creating the PowerPoint figures used in a Receiver Operating Characterisitc (ROC) talk - this is in the folder [figures/ROC](figures/ROC).
+The completed examples are also copied to [MATLAB Drive](https://drive.matlab.com) and can be run by users locally, or, in [MATLAB Online](https://matlab.mathworks.com) without needing to install MATLAB. They are available in MATLAB Drive using the following sharing link (though there is a limit to the number of times the link can be used): 
 https://drive.matlab.com/sharing/cd63980b-b7e2-4cfb-9a99-c3e060322513 
 
-The folder structure is:
+The GitHub repo folder structure is:
 
-Guides  
+matlab-guides  
 
     source/  - the LiveScript .mlx files. Run these locally, or in MATLAB Online  
     data/    - data required  
     mfile/   - the LiveScripts converted to .m files  
-    PDF/     - the LiveScripts, with figure outputs, as PDF files (MATLAB not required to view).  
+    PDF/     - the LiveScripts, including the figure outputs, as PDF files (MATLAB not required to view).  
     figures/ROC - the `figuresROC.m` file used to create figures for a PowerPoint presentation
 
 The current completed examples are:
@@ -34,7 +34,7 @@ The current completed examples are:
 
     MATLAB              - Some notes on MATLAB
 
-    path_handling       -Notes on filepaths and file handling
+    path_handling       - Notes on filepaths and file handling
     
 
 
