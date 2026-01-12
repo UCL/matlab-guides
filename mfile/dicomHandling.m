@@ -26,21 +26,23 @@
 % is that they allow software to keep track of images, scans, sessions and patients. 
 % Series usually also get a text name to help identification e.g. "Survey", "T1W" 
 % 
-% There is no unique identifier for the patient. Within a clinical environment, 
-% identification usually involves at least patient name and date of birth.
+% There is no global unique identifier for the patient. Within a clinical environment, 
+% physical identification usually involves at least patient name and date of birth. 
+% DICOM records a |PatientID| and this is usuallu their Medical Record Number 
+% (MRN), sometimes called "Hospital Number".
 % 
 % "Classic" and "Enhanced" DICOM
 % Throughout DICOM, it is useful to think of every image as just a 2D slice 
-% with information about its position in the meta-data. It is up to the user to 
-% assemble these images correctly in a 3D volume or a time series. In Classic 
-% DICOM, there is one image per file, whilst in Enhanced DICOM, there are multiple 
-% images in one file, usually there is one file for all the images in one Series. 
-% In MR, Enhanced DICOM also has more meta information about technical aspects 
-% of the scan. Enhanced DICOM has the advantages of more information and fewer 
-% files, however, the older Classic format can be read by all DICOM handling software. 
-% Enhanced DICOM is also called 'multiframe' because there are multiple frames 
-% in a single file. Note that 'frame' here means a single image and does not necessarily 
-% relate to a time frame.
+% with information about its position stored in the meta-data. It is up to the 
+% user to assemble these images correctly in a 3D volume or a time series. In 
+% Classic DICOM, there is one image per file, whilst in Enhanced DICOM, there 
+% are multiple images in one file, usually there is one file for all the images 
+% in one Series. In MR, Enhanced DICOM also has more meta information about technical 
+% aspects of the scan. Enhanced DICOM has the advantages of more information and 
+% fewer files, however, the older Classic format can be read by all DICOM handling 
+% software. Enhanced DICOM is also called 'multiframe' because there are multiple 
+% frames in a single file. Note that 'frame' here means a single image and does 
+% not necessarily relate to a time frame.
 % 
 % File naming and organisation
 % Although some software tries to name DICOM files and folders in meaningful 
@@ -154,7 +156,7 @@ dc("s3",:)
 %% 
 % |dicomread|
 %% 
-% Reads the (integer) pixel data in a DICOM file.
+% Reads the (integer) pixel data in a DICOM file (the Stored Values).
 %% 
 % |dicomreadVolume|
 %% 
@@ -162,10 +164,10 @@ dc("s3",:)
 % information. 
 %% 
 % For a single frame file, |dicomread| returns the pixels for that file. For 
-% a multi-frame file, it returns all the frames. These can be sorted using information 
-% from |dicominfo|. For a *volume*, the function |dicomreadVolume| can read a 
-% volume, sort the slices into the correct order and also returns a structure 
-% with geometry information.
+% a multi-frame file, it returns all the frames. These can be sorted later using 
+% information from |dicominfo|. For a *volume*, the function |dicomreadVolume| 
+% can read a volume, sort the slices into the correct order and also returns a 
+% structure with geometry information.
 % 
 % 
 % Viewing Volumes using the Medical Image Toolbox
@@ -194,9 +196,9 @@ dc("s3",:)
 % 
 % Pixel Data Sizes and Types
 % Within a DICOM MR file, the pixel data is stored as integers and returned 
-% as type |int16|. Also, some attributes are read by MATLAB as integers. For many 
-% computations, it is safest to first convert these to type |double| to avoid 
-% inadvertent integer rounding (see below).
+% by |dicomread| as type |int16|. Also, some meta-data attributes are read by 
+% MATLAB as integers. For many computations, it is safest to first convert these 
+% to type |double| to avoid inadvertent integer rounding (see below).
 % 
 % Some MATLAB functions use volumes of size [nrows ncols 1 nslices] with the 
 % '1' replaced by a '3' for RGB data. The function |dicomreadVolume| returns volumes 
@@ -204,13 +206,13 @@ dc("s3",:)
 % 
 % The user also needs to consider scaling:
 % Scaling of data
-% Pixels are usually stored in DICOM as integers. If the underlying data is 
-% floating point or outside of the range of the integers used, then data might 
-% need to be linearly scaled using a |RescaleSlope| and |RescaleIntercept|. Typically 
-% this might be to get Hounsfield numbers in CT, or computed parameters in MR 
-% e.g. ADC diffusion values. In some DICOM files, the |RescaleSlope| and |RescaleIntercept| 
-% are replaced or complemented with |RealWorldValueMapping| parameters, which 
-% form a similar purpose, discussed later.
+% Pixels are usually stored in DICOM as integers ('Stored Value'). If the underlying 
+% data is floating point or outside of the range of the integers used, then data 
+% might need to be linearly scaled using a |RescaleSlope| and |RescaleIntercept|. 
+% Typically this might be to get Hounsfield numbers in CT, or computed parameters 
+% in MR e.g. ADC diffusion values. In some DICOM files, the |RescaleSlope| and 
+% |RescaleIntercept| are replaced, or complemented, with |RealWorldValueMapping| 
+% parameters, which form a similar purpose, discussed later.
 % 
 % For the ankle CT data in the original dicomCollection
 
@@ -243,9 +245,10 @@ imshow(imgHounsfield,[]), colorbar
 % was applied.
 % RescaleSlope and RealWorldValueSlope
 % In the above example, |RescaleSlope| and |RescaleIntercept| are top-level 
-% attributes. Sometimes in Enhanced DICOM, they can be hard to find, nested one 
-% per frame in the |PerFrameFunctionalGroupsSequence.| In this case, they can 
-% all be found by creating a |dicomFile| object and using |findAttribute(dFile,'RescaleSlope').|
+% attributes (not 'buried' within a DICOM Sequence. Sometimes in Enhanced DICOM, 
+% they can be hard to find, nested one per frame in the |PerFrameFunctionalGroupsSequence.| 
+% In this case, they can all be found by creating a |dicomFile| object and using 
+% |findAttribute(dFile,'RescaleSlope').|
 % 
 % Similarly, the |RealWorldValueSlope|  can be in the |SharedFunctionalGroupsSequence| 
 % and it can be located using |findAttribute(dFile,'RealWorldValueSlope').|
@@ -257,7 +260,8 @@ imshow(imgHounsfield,[]), colorbar
 % values, a linear mapping like the Hounsfield example above is used, i.e.  |floating_point_values 
 % = slope * double(Integer_values) + intercept|  
 % 
-% 
+% It can be clearer to perform rescalings manually, using MATLAB's |dicomread| 
+% and |dicominfo|, rather than second-guess what software is doing, or not doing.
 %% 
 % 
 % Anonymisation and Protected Health Information
@@ -268,8 +272,8 @@ imshow(imgHounsfield,[]), colorbar
 % NIfTI format. For de-identification, use quality software such as <http://www.dclunie.com/pixelmed/software/webstart/DicomCleanerUsage.html 
 % DicomCleaner>. For saving of intermediate results, use |.mat| files and include 
 % both the processed data, and a copy of the output of |dicominfo| that has been 
-% run on the de-identified data. If you have to use NIfTI, use a reliable convertor 
-% such as dcm2niix.
+% run on the de-identified data (to save UIDs and filenames). If you have to use 
+% NIfTI, use a reliable convertor such as dcm2niix.
 % 
 % As stated, my preference for anonymisation is to use DicomCleaner. However, 
 % MATLAB can be useful for some manipulations. |dicomanon| will remove a pre-set 
@@ -293,7 +297,7 @@ dicomanon(fileIn, fileOut, "update",attr_update, "keep", attr_keep)
 % 
 % 
 % The |updateAttribute| function can be used with a |dicomFile| object to change 
-% a specific attribute. Note this does not perform any further anonymisation amd 
+% a specific attribute. Note this does not perform any further anonymisation and 
 % will leave other attributes unchanged.
 
 dFileIn = dicomFile(fileIn) ;
@@ -304,14 +308,14 @@ write(dFileNew,fileOut)
 % Comment
 % Reading DICOM data can be fiddly, sometimes needing trial and error. For example, 
 % in the above the filenames were in a cell array in one example, and not in another. 
-% Writing DICOM is harder, and can be a lot harder to get fully correct. Many 
-% people convert DICOM to NIfTI format but this has two major disadvantages. Firstly, 
-% a lot of software that uses NIfTI does not correctly handle geometry and you 
-% can end up with images are have slices reversed, flipped or transposed and this 
-% is both unsafe clinically and makes comparison with other clinical images error-prone. 
-% Second, the meta-data is no longer with the image (as NIfTI has only a brief 
-% header) so it might be difficult or error-prone to correlate image data with 
-% other patient data, for example histology results.
+% Writing DICOM is harder, and can be a lot harder to get fully correct. As a 
+% result, many people convert DICOM to NIfTI format but this has two major disadvantages. 
+% Firstly, a lot of software that uses NIfTI does not correctly handle geometry 
+% and you can end up with images are have slices reversed, flipped or transposed 
+% and this is both unsafe clinically and makes comparison with other clinical 
+% images error-prone. Second, the meta-data is no longer with the image (as NIfTI 
+% has only a brief header) so it might be difficult or error-prone to correlate 
+% image data with other patient data, for example histology results.
 % 
 % 
 % 
